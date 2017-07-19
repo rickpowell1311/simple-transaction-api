@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using LiteDB;
+using SimpleTransactions.Api.Domain;
 
 namespace SimpleTransactions.Api.Infrastructure
 {
@@ -6,7 +8,15 @@ namespace SimpleTransactions.Api.Infrastructure
     {
         protected override void Load(ContainerBuilder builder)
         {
-            // TODO: Build dependencies
+            builder.Register(ctx => new LiteDatabase("simpletransactions.db"))
+                .AsSelf()
+                .InstancePerLifetimeScope();
+
+            builder.Register(ctx =>
+            {
+                var db = ctx.Resolve<LiteDatabase>();
+                return db.GetCollection<Transaction>();
+            }).AsSelf();
         }
     }
 }
