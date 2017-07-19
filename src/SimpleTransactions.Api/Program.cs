@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Autofac.Extensions.DependencyInjection;
 
 namespace SimpleTransactions.Api
 {
@@ -9,6 +10,7 @@ namespace SimpleTransactions.Api
         {
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .ConfigureServices(services => services.AddAutofac())
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
