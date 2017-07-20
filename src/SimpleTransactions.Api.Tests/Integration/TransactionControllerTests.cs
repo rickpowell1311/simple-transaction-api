@@ -34,7 +34,7 @@ namespace SimpleTransactions.Api.Tests.Integration
             await fixture.Client.PostAsJsonAsync("api/transaction", validTransaction);
 
             var response = await fixture.Client.GetAsync("api/transaction");
-            var transactions = await response.Content.ReadAsJsonAsync<List<TransactionModels.Get>>();
+            var transactions = await response.Content.ReadAsJsonAsync<List<TransactionModel.Get>>();
 
             Assert.NotEmpty(transactions);
         }
@@ -46,11 +46,11 @@ namespace SimpleTransactions.Api.Tests.Integration
             await fixture.Client.PostAsJsonAsync("api/transaction", validTransaction);
 
             var fetchAllResponse = await fixture.Client.GetAsync("api/transaction");
-            var transactions = await fetchAllResponse.Content.ReadAsJsonAsync<List<TransactionModels.Get>>();
+            var transactions = await fetchAllResponse.Content.ReadAsJsonAsync<List<TransactionModel.Get>>();
             var transaction = transactions.First();
 
             var fetchResponse = await fixture.Client.GetAsync($"api/transaction/{transaction.TransactionId}");
-            transaction = await fetchResponse.Content.ReadAsJsonAsync<TransactionModels.Get>();
+            transaction = await fetchResponse.Content.ReadAsJsonAsync<TransactionModel.Get>();
 
             Assert.NotNull(transaction);
         }
@@ -62,11 +62,11 @@ namespace SimpleTransactions.Api.Tests.Integration
             await fixture.Client.PostAsJsonAsync("api/transaction", validTransaction);
 
             var response = await fixture.Client.GetAsync("api/transaction");
-            var transactions = await response.Content.ReadAsJsonAsync<List<TransactionModels.Get>>();
+            var transactions = await response.Content.ReadAsJsonAsync<List<TransactionModel.Get>>();
 
             var transaction = transactions.First();
 
-            var updated = new TransactionModels.Put
+            var updated = new TransactionModel.Put
             {
                 TransactionId = transaction.TransactionId,
                 CurrencyCode = transaction.CurrencyCode,
@@ -88,7 +88,7 @@ namespace SimpleTransactions.Api.Tests.Integration
             await fixture.Client.PostAsJsonAsync("api/transaction", validTransaction);
 
             var response = await fixture.Client.GetAsync("api/transaction");
-            var transactions = await response.Content.ReadAsJsonAsync<List<TransactionModels.Get>>();
+            var transactions = await response.Content.ReadAsJsonAsync<List<TransactionModel.Get>>();
 
             var transaction = transactions.First();
 
@@ -97,9 +97,9 @@ namespace SimpleTransactions.Api.Tests.Integration
             Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
         }
 
-        private TransactionModels.Post ValidTransaction()
+        private TransactionModel.Post ValidTransaction()
         {
-            return new TransactionModels.Post
+            return new TransactionModel.Post
             {
                 CurrencyCode = Domain.CurrencyCode.GBP,
                 Description = "test description",

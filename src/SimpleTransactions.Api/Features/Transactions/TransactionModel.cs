@@ -3,7 +3,7 @@ using System;
 
 namespace SimpleTransactions.Api.Features.Transactions
 {
-    public static class TransactionModels
+    public static class TransactionModel
     {
         public class Get
         {

@@ -18,26 +18,26 @@ namespace SimpleTransactions.Api.Features.Transactions
         }
 
         [HttpGet("api/transaction")]
-        public IEnumerable<TransactionModels.Get> FetchAll()
+        public IEnumerable<TransactionModel.Get> FetchAll()
         {
             return transactions
                 .FindAll()
-                .Select(t => new TransactionModels.Get(t));
+                .Select(t => new TransactionModel.Get(t));
         }
 
         [HttpGet("api/transaction/{id}")]
-        public TransactionModels.Get Fetch(int id)
+        public TransactionModel.Get Fetch(int id)
         {
             var transaction = transactions
                 .FindOne(t => t.Id == id);
 
             Ensure.This(transaction).CompliesWith(t => t != null, $"Cannot find transaction with id '{id}'");
 
-            return new TransactionModels.Get(transaction);
+            return new TransactionModel.Get(transaction);
         }
 
         [HttpPost("api/transaction")]
-        public IActionResult Insert([FromBody]TransactionModels.Post model)
+        public IActionResult Insert([FromBody]TransactionModel.Post model)
         {
             var transaction = Transaction.Create(
                 model.TransactionAmount,
@@ -52,7 +52,7 @@ namespace SimpleTransactions.Api.Features.Transactions
         }
 
         [HttpPut("api/transaction")]
-        public IActionResult Update([FromBody]TransactionModels.Put model)
+        public IActionResult Update([FromBody]TransactionModel.Put model)
         {
             var transaction = transactions
                 .FindOne(t => t.Id == model.TransactionId);
