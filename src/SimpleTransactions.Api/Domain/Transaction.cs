@@ -51,7 +51,7 @@ namespace SimpleTransactions.Api.Domain
             Ensure.This(amount).CompliesWith(a => a != default(decimal), "Transaction amount cannot be 0");
 
             CurrencyCode = currencyCode;
-            Amount = Amount;
+            Amount = amount;
         }
 
         public void SetDescription(string description)

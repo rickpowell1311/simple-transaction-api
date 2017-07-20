@@ -1,8 +1,10 @@
 ﻿using LiteDB;
 using Microsoft.AspNetCore.Mvc;
 using SimpleTransactions.Api.Domain;
+using SimpleTransactions.Api.Infrastructure.Validation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SimpleTransactions.Api.Features.Transactions
 {
@@ -18,31 +20,59 @@ namespace SimpleTransactions.Api.Features.Transactions
         [HttpGet("api/transaction")]
         public IEnumerable<TransactionModels.Get> FetchAll()
         {
-            throw new NotImplementedException();
+            return transactions
+                .FindAll()
+                .Select(t => new TransactionModels.Get(t));
         }
 
         [HttpGet("api/transaction/{id}")]
         public TransactionModels.Get Fetch(int id)
         {
-            throw new NotImplementedException();
+            var transaction = transactions
+                .FindOne(t => t.Id == id);
+
+            Ensure.This(transaction).CompliesWith(t => t != null, $"Cannot find transaction with id '{id}'");
+
+            return new TransactionModels.Get(transaction);
         }
 
         [HttpPost("api/transaction")]
-        public void Insert([FromBody]TransactionModels.Post model)
+        public IActionResult Insert([FromBody]TransactionModels.Post model)
         {
-            throw new NotImplementedException();
+            var transaction = Transaction.Create(
+                model.TransactionAmount,
+                model.CurrencyCode,
+                model.TransactionDate,
+                model.Description,
+                model.Merchant);
+
+            transactions.Insert(transaction);
+
+            return Created("api/transaction", transaction);
         }
 
         [HttpPut("api/transaction")]
-        public void Update([FromBody]TransactionModels.Put model)
+        public IActionResult Update([FromBody]TransactionModels.Put model)
         {
-            throw new NotImplementedException();
+            var transaction = transactions
+                .FindOne(t => t.Id == model.TransactionId);
+
+            Ensure.This(transaction).CompliesWith(t => t != null, $"Cannot find transaction with id '{model.TransactionId}'");
+
+            transaction.SetAmount(model.CurrencyCode, model.TransactionAmount);
+            transaction.SetDescription(model.Description);
+            transaction.SetMerchant(model.Merchant);
+            transaction.SetTransactionDate(model.TransactionDate);
+
+            return Ok(transaction);
         }
 
         [HttpDelete("api/transaction/{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            throw new NotImplementedException();
+            transactions.Delete(t => t.Id == id);
+
+            return NoContent();
         }
     }
 }

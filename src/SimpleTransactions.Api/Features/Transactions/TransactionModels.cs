@@ -17,11 +17,27 @@ namespace SimpleTransactions.Api.Features.Transactions
 
             public DateTime CreatedDate { get; set; }
 
-            public DateTime ModifiedDate { get; set; }
+            public DateTime? ModifiedDate { get; set; }
 
             public CurrencyCode CurrencyCode { get; set; }
             
             public string Merchant { get; set; }
+
+            public Get()
+            {
+            }
+
+            public Get(Transaction transaction)
+            {
+                TransactionId = transaction.Id;
+                TransactionDate = transaction.Date;
+                Description = transaction.Description;
+                TransactionAmount = transaction.Amount;
+                CreatedDate = transaction.CreatedDate;
+                ModifiedDate = transaction.ModifiedDate;
+                CurrencyCode = transaction.CurrencyCode;
+                Merchant = transaction.Merchant;
+            }
         }
 
         public class Post
