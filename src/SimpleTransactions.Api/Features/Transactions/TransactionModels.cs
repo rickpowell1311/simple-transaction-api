@@ -26,6 +26,8 @@ namespace SimpleTransactions.Api.Features.Transactions
 
         public class Post
         {
+            public DateTime TransactionDate { get; set; }
+
             public string Description { get; set; }
 
             public decimal TransactionAmount { get; set; }
@@ -38,6 +40,8 @@ namespace SimpleTransactions.Api.Features.Transactions
         public class Put
         {
             public int TransactionId { get; set; }
+
+            public DateTime TransactionDate { get; set; }
 
             public string Description { get; set; }
 
