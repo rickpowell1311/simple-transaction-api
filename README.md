@@ -9,7 +9,7 @@ A simple API designed to save, update, delete and fetch transactions
 ### Quickstart ###
 
 * Using git, clone this repository
-* Open the .sln file in Visual Studio and Build the solution. Nuget packages should be restored on build
+* Open the .sln file in Visual Studio and build the solution. Nuget packages should be restored on build
 * To run, set the SimpleTransactions.Api project to be the Startup project, and begin debugging using IIS Express
 * The API can be consumed locally at http://localhost:58555/api/
 
