@@ -63,6 +63,9 @@ namespace SimpleTransactions.Api.Features.Transactions
             transaction.SetDescription(model.Description);
             transaction.SetMerchant(model.Merchant);
             transaction.SetTransactionDate(model.TransactionDate);
+            transaction.MarkAsModified();
+
+            transactions.Update(transaction);
 
             return Ok(transaction);
         }

@@ -32,6 +32,7 @@ namespace SimpleTransactions.Api.Domain
             transaction.SetTransactionDate(date);
             transaction.SetDescription(description);
             transaction.SetMerchant(description);
+            transaction.CreatedDate = DateTime.Now.Date;
 
             return transaction;
         }
@@ -70,6 +71,11 @@ namespace SimpleTransactions.Api.Domain
                 Ensure.This(merchant).CompliesWith(d => d.Length <= 50, "Merchant should not be more than 50 characters");
                 Merchant = merchant;
             }
+        }
+
+        public void MarkAsModified()
+        {
+            ModifiedDate = DateTime.Now.Date;
         }
     }
 }
