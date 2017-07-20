@@ -5,6 +5,8 @@ A simple API designed to save, update, delete and fetch transactions
 ### Prerequisites ###
 
 * Visual studio 2017
+    - solution runs on dot net core
+    - solution uses C# v7
 
 ### Quickstart ###
 
